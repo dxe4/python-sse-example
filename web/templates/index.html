@@ -1,0 +1,30 @@
+<!doctype html>
+<head>
+    <title>eggs</title>
+    <script type=text/javascript src="static/lib/jquery-210-min.js"></script>
+    <script type=text/javascript src="static/lib/EventSource.js"></script>
+</head>
+<body>
+<button id="start-button" type="button">Start!</button>
+<ul id="foo">
+
+</ul>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#start-button").on("click", function (e) {
+            var foo = $("#foo");
+            var sse = new EventSource('/stream');
+            sse.onmessage = function (message) {
+                var _json = jQuery.parseJSON( message.data);
+                foo.append("<li>"+ _json["count"] + " " + _json["message"] +"</li>");
+                if (_json["count"] === 10) {
+                    sse.close();
+                    sse = null;
+                }
+            };
+        });
+    });
+</script>
+</html>
