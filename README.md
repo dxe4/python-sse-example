@@ -1,1 +1,1 @@
-Example of sse using flask and EventSource
+Example of sse using flask and EventSource. Requires flask, `python main.py`. I used python3.3
